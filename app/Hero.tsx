@@ -13,8 +13,7 @@ export default function Hero() {
       <div className="relative mx-auto grid max-w-5xl gap-8 px-6 py-14 md:grid-cols-2 md:items-center md:py-20">
         <div>
           <h1 className="font-black uppercase leading-[0.9] tracking-tight text-[#f2e85c] drop-shadow-[2px_2px_0_rgba(0,0,0,0.15)]">
-            <span className="block text-5xl md:text-6xl">Swimming</span>
-            <span className="block text-5xl md:text-6xl">Lessons</span>
+            <span className="block text-5xl md:text-6xl">Private Swimming Lessons</span>
           </h1>
           <p className="mt-4 max-w-md text-lg font-medium text-white/95">
             Learn to swim with confidence and safety — private lessons in a big
@@ -44,7 +43,7 @@ export default function Hero() {
               Book a lesson →
             </a>
             <span className="rounded-full bg-white/15 px-4 py-2 text-sm font-semibold">
-              📍 Glen Rock, NJ
+              📍 35 Rutland Rd. Glen Rock, NJ
             </span>
           </div>
         </div>
@@ -67,26 +66,145 @@ export default function Hero() {
   );
 }
 
+// Hand-drawn, flyer-style doodle: two ginger-haired kids in a soft blue water
+// blob, with white ripple linework and scattered splash droplets.
+const SKIN = "#ffd3a1";
+const HAIR = "#f0913c";
+const SUIT = "#ee5391";
+const INK = "#33271b";
+const WATER = "#5478c4";
+const WATER_FRONT = "#4a6cb4";
+const FOAM = "#eef5ff";
+
 function Swimmers() {
   return (
-    <svg viewBox="0 0 200 160" className="w-full" aria-hidden="true">
-      <ellipse cx="100" cy="120" rx="92" ry="30" fill="#6f93d6" opacity="0.7" />
-      {/* swimmer 1 */}
-      <circle cx="70" cy="70" r="14" fill="#ffd9a0" />
-      <rect x="58" y="84" width="24" height="30" rx="10" fill="#e94f8a" />
-      <line x1="58" y1="60" x2="42" y2="48" stroke="#ffd9a0" strokeWidth="7" strokeLinecap="round" />
-      <line x1="82" y1="60" x2="98" y2="48" stroke="#ffd9a0" strokeWidth="7" strokeLinecap="round" />
-      <path d="M55 64 q15 -10 30 0" stroke="#ff9d3d" strokeWidth="6" fill="none" strokeLinecap="round" />
-      {/* swimmer 2 */}
-      <circle cx="135" cy="60" r="13" fill="#ffd9a0" />
-      <rect x="124" y="73" width="22" height="28" rx="9" fill="#e94f8a" />
-      <line x1="124" y1="52" x2="110" y2="40" stroke="#ffd9a0" strokeWidth="6" strokeLinecap="round" />
-      <line x1="146" y1="52" x2="160" y2="40" stroke="#ffd9a0" strokeWidth="6" strokeLinecap="round" />
-      <path d="M123 54 q12 -9 24 0" stroke="#ff9d3d" strokeWidth="5" fill="none" strokeLinecap="round" />
-      {/* splashes */}
-      <circle cx="100" cy="110" r="4" fill="#fff" opacity="0.8" />
-      <circle cx="115" cy="118" r="3" fill="#fff" opacity="0.8" />
-      <circle cx="85" cy="120" r="3" fill="#fff" opacity="0.8" />
+    <svg
+      viewBox="0 0 240 200"
+      className="w-full"
+      role="img"
+      aria-label="Two children happily swimming in a pool"
+    >
+      <defs>
+        <clipPath id="blob">
+          <path d="M22 78 C18 50 52 40 108 42 C168 44 224 40 226 82 C230 122 222 168 150 172 C92 176 30 172 20 132 C14 108 26 96 22 78 Z" />
+        </clipPath>
+      </defs>
+
+      <g clipPath="url(#blob)">
+        {/* water */}
+        <rect x="0" y="0" width="240" height="200" fill={WATER} />
+
+        {/* swimmers (lower bodies hidden by the front water band) */}
+        <BackSwimmer />
+        <FrontSwimmer />
+
+        {/* front water band with a wavy top → kids look waist-deep */}
+        <path
+          d="M6 112 q24 -11 48 0 t48 0 t48 0 t48 0 t48 0 L246 200 L6 200 Z"
+          fill={WATER_FRONT}
+        />
+
+        {/* white ripple linework on the surface */}
+        <g fill="none" stroke={FOAM} strokeLinecap="round">
+          <path d="M8 112 q24 -11 48 0 t48 0 t48 0 t48 0 t48 0" strokeWidth="2.4" opacity="0.9" />
+          {/* around the front swimmer */}
+          <path d="M64 118 q34 14 70 0" strokeWidth="2" opacity="0.85" />
+          <path d="M72 126 q26 11 54 0" strokeWidth="1.6" opacity="0.55" />
+          {/* around the back swimmer */}
+          <path d="M126 110 q28 11 58 0" strokeWidth="2" opacity="0.8" />
+          <path d="M132 116 q22 9 46 0" strokeWidth="1.5" opacity="0.5" />
+          {/* loose free ripples */}
+          <path d="M40 138 q11 6 22 0" strokeWidth="1.5" opacity="0.55" />
+          <path d="M176 134 q12 6 24 0" strokeWidth="1.5" opacity="0.55" />
+          <path d="M150 150 q12 6 24 0" strokeWidth="1.4" opacity="0.45" />
+        </g>
+      </g>
+
+      {/* splash droplets (drawn over everything, can spill past the blob) */}
+      <g fill={FOAM}>
+        {/* cluster to the upper-left, like the flyer */}
+        <Drop x={50} y={70} s={1.1} />
+        <Drop x={44} y={84} s={0.8} />
+        <Drop x={56} y={92} s={0.9} />
+        <Drop x={40} y={100} s={0.7} />
+        {/* flying off the raised hands */}
+        <Drop x={150} y={40} s={1} />
+        <Drop x={160} y={32} s={0.7} />
+        <Drop x={196} y={52} s={0.9} />
+        <Drop x={204} y={64} s={0.7} />
+        <Drop x={128} y={52} s={0.8} />
+        {/* a few small splashes near the water */}
+        <circle cx="92" cy="150" r="2.4" />
+        <circle cx="110" cy="158" r="1.8" />
+        <circle cx="170" cy="156" r="2" />
+      </g>
     </svg>
+  );
+}
+
+// A soft white water droplet (rounded teardrop), scaled by `s`.
+function Drop({ x, y, s }: { x: number; y: number; s: number }) {
+  return (
+    <ellipse cx={x} cy={y} rx={3.2 * s} ry={4.4 * s} opacity="0.92" />
+  );
+}
+
+// Front kid: long flowing ginger hair, one arm waving.
+function FrontSwimmer() {
+  return (
+    <g transform="translate(98 102)">
+      {/* long hair behind, flowing into the water */}
+      <ellipse cx="0" cy="-19" rx="18" ry="20" fill={HAIR} />
+      <path d="M-15 -8 q-7 28 -3 52" fill="none" stroke={HAIR} strokeWidth="8" strokeLinecap="round" />
+      <path d="M15 -8 q7 28 3 52" fill="none" stroke={HAIR} strokeWidth="8" strokeLinecap="round" />
+
+      {/* torso + pink swimsuit */}
+      <path d="M-12 -6 Q0 -11 12 -6 L11 34 Q0 39 -11 34 Z" fill={SUIT} stroke={INK} strokeWidth="1" />
+
+      {/* arms */}
+      <path d="M-11 -2 Q-23 -1 -31 7" fill="none" stroke={SKIN} strokeWidth="7.5" strokeLinecap="round" />
+      <path d="M11 -3 Q25 -14 31 -40" fill="none" stroke={SKIN} strokeWidth="7.5" strokeLinecap="round" />
+
+      {/* head */}
+      <circle cx="0" cy="-19" r="14" fill={SKIN} />
+      {/* fringe */}
+      <path d="M-14 -21 Q-14 -35 0 -35 Q14 -35 14 -21 Q7 -29 0 -28 Q-7 -29 -14 -21 Z" fill={HAIR} />
+
+      {/* face */}
+      <circle cx="-5.5" cy="-19" r="1.9" fill={INK} />
+      <circle cx="5.5" cy="-19" r="1.9" fill={INK} />
+      <path d="M-5 -12 Q0 -7 5 -12" fill="none" stroke={INK} strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="-9" cy="-14" r="2.3" fill="#ff9a9a" opacity="0.55" />
+      <circle cx="9" cy="-14" r="2.3" fill="#ff9a9a" opacity="0.55" />
+    </g>
+  );
+}
+
+// Back kid: ginger top-bun, both arms raised.
+function BackSwimmer() {
+  return (
+    <g transform="translate(152 92) scale(0.9)">
+      {/* hair + bun */}
+      <ellipse cx="0" cy="-17" rx="15" ry="16" fill={HAIR} />
+      <circle cx="0" cy="-33" r="7" fill={HAIR} />
+
+      {/* torso + pink swimsuit */}
+      <path d="M-11 -5 Q0 -10 11 -5 L10 32 Q0 37 -10 32 Z" fill={SUIT} stroke={INK} strokeWidth="1" />
+
+      {/* both arms raised */}
+      <path d="M-9 -3 Q-19 -18 -23 -36" fill="none" stroke={SKIN} strokeWidth="7" strokeLinecap="round" />
+      <path d="M9 -3 Q19 -18 23 -36" fill="none" stroke={SKIN} strokeWidth="7" strokeLinecap="round" />
+
+      {/* head */}
+      <circle cx="0" cy="-17" r="12.5" fill={SKIN} />
+      <path d="M-12 -19 Q-12 -31 0 -31 Q12 -31 12 -19 Q6 -26 0 -25 Q-6 -26 -12 -19 Z" fill={HAIR} />
+
+      {/* face */}
+      <circle cx="-4.8" cy="-17" r="1.7" fill={INK} />
+      <circle cx="4.8" cy="-17" r="1.7" fill={INK} />
+      <path d="M-4.4 -10 Q0 -6 4.4 -10" fill="none" stroke={INK} strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="-8" cy="-12" r="2" fill="#ff9a9a" opacity="0.55" />
+      <circle cx="8" cy="-12" r="2" fill="#ff9a9a" opacity="0.55" />
+    </g>
   );
 }
