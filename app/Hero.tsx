@@ -1,13 +1,20 @@
 // Marketing hero — recreates the flyer's look (deep blue, yellow display type,
-// playful swimmer illustration) with the updated details the owner provided.
+// playful swimmer illustration) with the updated details the admin provided.
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-[#3a5ba8] text-white">
-      {/* decorative bubbles */}
+      {/* decorative bubbles scattered around the hero */}
       <div className="pointer-events-none absolute inset-0 opacity-30">
         <div className="absolute right-10 top-10 h-40 w-40 rounded-full bg-[#4a6fc0]" />
         <div className="absolute -left-10 bottom-10 h-56 w-56 rounded-full bg-[#33509a]" />
         <div className="absolute right-1/3 top-1/2 h-24 w-24 rounded-full bg-[#4a6fc0]" />
+        <div className="absolute -right-12 bottom-6 h-48 w-48 rounded-full bg-[#5a7fd0]" />
+        <div className="absolute left-1/4 -top-8 h-28 w-28 rounded-full bg-[#5a7fd0]" />
+        <div className="absolute left-6 top-1/3 h-16 w-16 rounded-full bg-[#4a6fc0]" />
+        <div className="absolute right-1/4 bottom-4 h-12 w-12 rounded-full bg-[#33509a]" />
+        <div className="absolute left-1/2 bottom-12 h-20 w-20 rounded-full bg-[#4a6fc0]" />
+        <div className="absolute right-20 top-1/2 h-10 w-10 rounded-full bg-[#5a7fd0]" />
+        <div className="absolute left-12 bottom-1/3 h-8 w-8 rounded-full bg-[#5a7fd0]" />
       </div>
 
       <div className="relative mx-auto grid max-w-5xl gap-8 px-6 py-14 md:grid-cols-2 md:items-center md:py-20">
@@ -50,7 +57,7 @@ export default function Hero() {
 
         {/* Illustration + price badge */}
         <div className="relative">
-          <div className="mx-auto flex max-w-sm items-center justify-center rounded-3xl bg-[#4a6fc0]/60 p-8">
+          <div className="mx-auto flex max-w-sm items-center justify-center">
             <Swimmers />
           </div>
           <div className="mx-auto mt-5 w-fit rounded-2xl bg-white px-6 py-4 text-center text-[#22356b] shadow-lg">

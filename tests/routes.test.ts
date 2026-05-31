@@ -14,7 +14,7 @@ vi.mock("@/lib/notify", () => ({
   sendCancelledNotification: vi.fn(),
 }));
 vi.mock("@/lib/auth", () => ({
-  isOwner: vi.fn(),
+  isAdmin: vi.fn(),
 }));
 
 import { POST as book } from "@/app/api/book/route";
@@ -78,24 +78,62 @@ describe("POST /api/book — validation", () => {
     const res = await book(req(valid));
     expect(res.status).toBe(409);
   });
+
+  it("books multiple slots from an ids array and notifies for each", async () => {
+    vi.mocked(db.bookSlot).mockImplementation(
+      async (id: string) => ({ ok: true, slot: { id, booking: { name: "Jane Doe" } } }) as never
+    );
+    const notify = await import("@/lib/notify");
+
+    const res = await book(req({ ids: ["s1", "s2", "s3"], name: "Jane Doe", phone: "2015550123" }));
+    const data = await res.json();
+    expect(res.status).toBe(200);
+    expect(db.bookSlot).toHaveBeenCalledTimes(3);
+    expect(data.booked).toHaveLength(3);
+    expect(notify.sendBookingRequestNotifications).toHaveBeenCalledTimes(3);
+  });
+
+  it("returns the booked subset (200) when some slots in the batch are taken", async () => {
+    vi.mocked(db.bookSlot).mockImplementation(
+      async (id: string) =>
+        (id === "taken"
+          ? { ok: false, error: "Sorry, that time was just booked." }
+          : { ok: true, slot: { id, booking: { name: "Jane Doe" } } }) as never
+    );
+
+    const res = await book(req({ ids: ["s1", "taken"], name: "Jane Doe", phone: "2015550123" }));
+    const data = await res.json();
+    expect(res.status).toBe(200);
+    expect(data.booked).toHaveLength(1);
+    expect(data.failures).toHaveLength(1);
+  });
+
+  it("returns 409 when every slot in the batch is taken", async () => {
+    vi.mocked(db.bookSlot).mockResolvedValue({
+      ok: false,
+      error: "Sorry, that time was just booked.",
+    } as never);
+    const res = await book(req({ ids: ["a", "b"], name: "Jane Doe", phone: "2015550123" }));
+    expect(res.status).toBe(409);
+  });
 });
 
 describe("PATCH /api/slots/[id] — confirm/cancel", () => {
-  it("requires owner auth", async () => {
-    vi.mocked(auth.isOwner).mockResolvedValue(false);
+  it("requires admin auth", async () => {
+    vi.mocked(auth.isAdmin).mockResolvedValue(false);
     const res = await PATCH(req({ action: "confirm" }), params("s1"));
     expect(res.status).toBe(401);
     expect(db.confirmSlot).not.toHaveBeenCalled();
   });
 
   it("rejects an unknown action", async () => {
-    vi.mocked(auth.isOwner).mockResolvedValue(true);
+    vi.mocked(auth.isAdmin).mockResolvedValue(true);
     const res = await PATCH(req({ action: "explode" }), params("s1"));
     expect(res.status).toBe(400);
   });
 
   it("confirms a booking and notifies the customer", async () => {
-    vi.mocked(auth.isOwner).mockResolvedValue(true);
+    vi.mocked(auth.isAdmin).mockResolvedValue(true);
     const slot = { id: "s1", booking: { status: "confirmed" } };
     vi.mocked(db.confirmSlot).mockResolvedValue(slot as never);
     const notify = await import("@/lib/notify");
@@ -106,14 +144,14 @@ describe("PATCH /api/slots/[id] — confirm/cancel", () => {
   });
 
   it("returns 404 confirming when there is no booking", async () => {
-    vi.mocked(auth.isOwner).mockResolvedValue(true);
+    vi.mocked(auth.isAdmin).mockResolvedValue(true);
     vi.mocked(db.confirmSlot).mockResolvedValue(null);
     const res = await PATCH(req({ action: "confirm" }), params("s1"));
     expect(res.status).toBe(404);
   });
 
   it("cancels a booking and notifies the customer", async () => {
-    vi.mocked(auth.isOwner).mockResolvedValue(true);
+    vi.mocked(auth.isAdmin).mockResolvedValue(true);
     const slot = { id: "s1", booking: { status: "pending" } };
     vi.mocked(db.cancelBooking).mockResolvedValue(slot as never);
     const notify = await import("@/lib/notify");
@@ -125,15 +163,15 @@ describe("PATCH /api/slots/[id] — confirm/cancel", () => {
 });
 
 describe("DELETE /api/slots/[id]", () => {
-  it("requires owner auth", async () => {
-    vi.mocked(auth.isOwner).mockResolvedValue(false);
+  it("requires admin auth", async () => {
+    vi.mocked(auth.isAdmin).mockResolvedValue(false);
     const res = await DELETE(req({}), params("s1"));
     expect(res.status).toBe(401);
     expect(db.removeSlot).not.toHaveBeenCalled();
   });
 
-  it("removes a slot for an authorized owner", async () => {
-    vi.mocked(auth.isOwner).mockResolvedValue(true);
+  it("removes a slot for an authorized admin", async () => {
+    vi.mocked(auth.isAdmin).mockResolvedValue(true);
     const res = await DELETE(req({}), params("s1"));
     expect(res.status).toBe(200);
     expect(db.removeSlot).toHaveBeenCalledWith("s1");

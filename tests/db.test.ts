@@ -4,6 +4,7 @@ import {
   addSlot,
   getSlots,
   getAvailableSlots,
+  getPublicSlots,
   bookSlot,
   confirmSlot,
   cancelBooking,
@@ -74,6 +75,45 @@ describe("getAvailableSlots", () => {
     const available = await getAvailableSlots();
     expect(available).toHaveLength(1);
     expect(available[0].id).toBe(open.id);
+  });
+});
+
+describe("getPublicSlots", () => {
+  it("includes open, booked, and past slots (full history)", async () => {
+    await addSlot(FUTURE, "09:00"); // open
+    const toBook = await addSlot(FUTURE, "10:00");
+    await addSlot(PAST, "09:00"); // past — still shown as history
+    await bookSlot(toBook.id, "Jane Doe", "2015550123", "jane@example.com");
+
+    const pub = await getPublicSlots();
+    expect(pub).toHaveLength(3);
+    expect(pub.map((s) => `${s.date} ${s.time}`)).toEqual([
+      `${PAST} 09:00`,
+      `${FUTURE} 09:00`,
+      `${FUTURE} 10:00`,
+    ]);
+  });
+
+  it("shows the customer name and status but redacts contact details", async () => {
+    const slot = await addSlot(FUTURE, "10:00");
+    await bookSlot(slot.id, "Jane Doe", "2015550123", "jane@example.com");
+
+    const booked = (await getPublicSlots()).find((s) => s.id === slot.id)!;
+    expect(booked.booking?.name).toBe("Jane Doe");
+    expect(booked.booking?.status).toBe("pending");
+    // Contact details stay private.
+    expect(booked.booking?.phone).toBe("");
+    expect(booked.booking?.email).toBeNull();
+  });
+
+  it("reflects confirmed status", async () => {
+    const slot = await addSlot(FUTURE, "10:00");
+    await bookSlot(slot.id, "Jane Doe", "2015550123");
+    await confirmSlot(slot.id);
+
+    const booked = (await getPublicSlots()).find((s) => s.id === slot.id)!;
+    expect(booked.booking?.status).toBe("confirmed");
+    expect(booked.booking?.name).toBe("Jane Doe");
   });
 });
 

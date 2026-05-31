@@ -30,7 +30,7 @@ export default function Home() {
         <div className="mx-auto max-w-3xl px-6">
           <h2 className="text-2xl font-bold text-slate-900">Book a lesson</h2>
           <p className="mt-2 text-slate-600">
-            Pick an open time below. Each lesson is 30 minutes for{" "}
+            Pick one or more open times below. Each lesson is 30 minutes for{" "}
             <strong>$60</strong>, paid in cash or Venmo at the lesson.
           </p>
           <div className="mt-6">
@@ -42,8 +42,8 @@ export default function Home() {
       <footer className="border-t border-slate-200 px-6 py-8 text-center text-sm text-slate-500">
         <p>📍 Glen Rock, NJ · Private backyard pool</p>
         <p className="mt-1">
-          <Link href="/owner" className="hover:text-slate-700 hover:underline">
-            Owner login
+          <Link href="/admin" className="hover:text-slate-700 hover:underline">
+            Admin login
           </Link>
         </p>
       </footer>

@@ -17,7 +17,7 @@ npm run dev
 Open http://localhost:3000.
 
 - **Customer site:** `/` — marketing page + booking.
-- **Owner dashboard:** `/owner` — log in with the password to add/remove time
+- **Admin dashboard:** `/admin` — log in with the password to add/remove time
   slots and view who has booked.
 
 ## Tests
@@ -53,18 +53,18 @@ Copy `.env.example` to `.env.local` and set:
 | Variable             | Required | What it does                                                     |
 | -------------------- | -------- | ---------------------------------------------------------------- |
 | `DATABASE_URL`       | ✅       | Postgres connection string (any Postgres; Neon on Vercel).       |
-| `OWNER_PASSWORD`     | ✅       | Password for the `/owner` dashboard (default `natalie2026`).      |
+| `ADMIN_PASSWORD`     | ✅       | Password for the `/admin` dashboard (default `natalie2026`).      |
 | `SESSION_SECRET`     | ✅       | Random string used to sign the login cookie.                     |
 | `RESEND_API_KEY`     |          | Resend API key — enables email notifications.                    |
 | `EMAIL_FROM`         |          | Verified sender, e.g. `Natalie's Swim Lessons <bookings@…>`.     |
-| `OWNER_EMAIL`        |          | Natalie's email — gets a message on every new booking.           |
+| `ADMIN_EMAIL`        |          | Natalie's email — gets a message on every new booking.           |
 
 ## How it works
 
 - Booking data is stored in **Postgres** (`lib/db.ts`, via the `postgres` driver).
   The `slots` table is created automatically on first use. Bookings are guarded by
   an atomic `UPDATE … WHERE booking_name IS NULL` so a slot can't be double-booked.
-- Owner-only routes are gated by an HMAC-signed session cookie (`lib/auth.ts`).
+- Admin-only routes are gated by an HMAC-signed session cookie (`lib/auth.ts`).
 - **Booking approval flow:** when a customer books, the slot becomes **pending** —
   it's held (no one else can take it) but not finalized. From her dashboard Natalie
   can **Confirm** it (→ confirmed), **Decline** a pending request, or **Cancel** a
@@ -87,12 +87,12 @@ createdb swim
 ```
 
 **Vercel:** add a **Neon Postgres** database from the Vercel Marketplace
-(Storage tab). It sets `DATABASE_URL` automatically. Then set `OWNER_PASSWORD`,
-`SESSION_SECRET`, and the optional `RESEND_API_KEY` / `EMAIL_FROM` / `OWNER_EMAIL`
+(Storage tab). It sets `DATABASE_URL` automatically. Then set `ADMIN_PASSWORD`,
+`SESSION_SECRET`, and the optional `RESEND_API_KEY` / `EMAIL_FROM` / `ADMIN_EMAIL`
 vars in the project's Environment Variables, and deploy.
 
 ## Email setup (Resend)
 
 Add **Resend** from the Vercel Marketplace (or sign up at resend.com), verify a
 sending domain, create an API key, and set `RESEND_API_KEY`, `EMAIL_FROM` (an
-address at your verified domain), and `OWNER_EMAIL` (Natalie's inbox).
+address at your verified domain), and `ADMIN_EMAIL` (Natalie's inbox).

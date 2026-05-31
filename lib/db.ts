@@ -141,6 +141,31 @@ export async function getAvailableSlots(): Promise<Slot[]> {
   return rows.map(toSlot);
 }
 
+// Every slot for the public calendar — open, booked, and past (full history) —
+// with the customer's name and status shown, but contact details (phone/email)
+// redacted so they aren't exposed publicly.
+export async function getPublicSlots(): Promise<Slot[]> {
+  await ensureSchema();
+  const sql = client();
+  const rows = await sql<Row[]>`
+    select id, date, "time", duration_mins, booking_name, booking_phone, booking_email, booking_status, booked_at
+    from slots
+    order by date asc, "time" asc
+  `;
+  return rows.map(toSlot).map(redactBooking);
+}
+
+// Strips a booked slot's private contact details (phone/email) for public view,
+// keeping the customer's name and status so the calendar can show who has each
+// slot — mirroring what the admin calendar displays.
+function redactBooking(slot: Slot): Slot {
+  if (!slot.booking) return slot;
+  return {
+    ...slot,
+    booking: { ...slot.booking, phone: "", email: null },
+  };
+}
+
 export async function addSlot(date: string, time: string): Promise<Slot> {
   await ensureSchema();
   const sql = client();
@@ -169,7 +194,7 @@ export async function bookSlot(
   await ensureSchema();
   const sql = client();
   // Atomic guard: only books if the slot is still open. New bookings are pending
-  // until the owner confirms them.
+  // until the admin confirms them.
   const rows = await sql<Row[]>`
     update slots
     set booking_name = ${name}, booking_phone = ${phone}, booking_email = ${email},
@@ -187,7 +212,7 @@ export async function bookSlot(
   return { ok: false, error: "Sorry, that time was just booked." };
 }
 
-// Owner confirms a pending booking. Returns the updated slot, or null if the
+// Admin confirms a pending booking. Returns the updated slot, or null if the
 // slot doesn't exist / has no booking.
 export async function confirmSlot(id: string): Promise<Slot | null> {
   await ensureSchema();
@@ -201,7 +226,7 @@ export async function confirmSlot(id: string): Promise<Slot | null> {
   return rows.length > 0 ? toSlot(rows[0]) : null;
 }
 
-// Owner cancels/declines a booking. Clears the booking so the slot is open
+// Admin cancels/declines a booking. Clears the booking so the slot is open
 // again, and returns the slot *with the cancelled booking still attached* so
 // the customer can be notified. Returns null if there was no booking.
 export async function cancelBooking(id: string): Promise<Slot | null> {

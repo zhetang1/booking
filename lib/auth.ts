@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import crypto from "crypto";
 
-const COOKIE_NAME = "owner_session";
+const COOKIE_NAME = "admin_session";
 
-// Owner password. Override in production via the OWNER_PASSWORD env var.
-export function ownerPassword(): string {
-  return process.env.OWNER_PASSWORD || "natalie2026";
+// Admin password. Override in production via the ADMIN_PASSWORD env var.
+export function adminPassword(): string {
+  return process.env.ADMIN_PASSWORD || "natalie2026";
 }
 
 function sessionSecret(): string {
@@ -15,7 +15,7 @@ function sessionSecret(): string {
 function sessionToken(): string {
   return crypto
     .createHmac("sha256", sessionSecret())
-    .update(ownerPassword())
+    .update(adminPassword())
     .digest("hex");
 }
 
@@ -35,7 +35,7 @@ export async function destroySession(): Promise<void> {
   jar.delete(COOKIE_NAME);
 }
 
-export async function isOwner(): Promise<boolean> {
+export async function isAdmin(): Promise<boolean> {
   const jar = await cookies();
   return jar.get(COOKIE_NAME)?.value === sessionToken();
 }

@@ -38,7 +38,7 @@ afterEach(() => {
 function configureResend() {
   vi.stubEnv("RESEND_API_KEY", "re_test");
   vi.stubEnv("EMAIL_FROM", "Natalie <bookings@example.com>");
-  vi.stubEnv("OWNER_EMAIL", "natalie@example.com");
+  vi.stubEnv("ADMIN_EMAIL", "natalie@example.com");
 }
 
 describe("when Resend is not configured", () => {
@@ -50,7 +50,7 @@ describe("when Resend is not configured", () => {
 });
 
 describe("sendBookingRequestNotifications", () => {
-  it("emails both the owner and the customer", async () => {
+  it("emails both the admin and the customer", async () => {
     configureResend();
     await sendBookingRequestNotifications(slot());
     expect(fetchMock).toHaveBeenCalledTimes(2);
@@ -67,7 +67,7 @@ describe("sendBookingRequestNotifications", () => {
     expect(init.headers.Authorization).toBe("Bearer re_test");
   });
 
-  it("emails only the owner when the customer left no email", async () => {
+  it("emails only the admin when the customer left no email", async () => {
     configureResend();
     await sendBookingRequestNotifications(slot({ email: null }));
     expect(fetchMock).toHaveBeenCalledTimes(1);

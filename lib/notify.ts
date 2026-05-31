@@ -52,11 +52,11 @@ export async function sendBookingRequestNotifications(slot: Slot): Promise<void>
 
   const tasks: Promise<void>[] = [];
 
-  const ownerEmail = process.env.OWNER_EMAIL;
-  if (ownerEmail) {
+  const adminEmail = process.env.ADMIN_EMAIL;
+  if (adminEmail) {
     tasks.push(
       sendEmail(
-        ownerEmail,
+        adminEmail,
         `New lesson request — ${when}`,
         layout(`
           <h2 style="margin:0 0 12px">New lesson request 🏊</h2>
@@ -93,7 +93,7 @@ export async function sendBookingRequestNotifications(slot: Slot): Promise<void>
   }
 }
 
-// Fired when the owner cancels/declines a booking. Lets the customer know.
+// Fired when the admin cancels/declines a booking. Lets the customer know.
 // The message is tailored to whether the booking was pending or confirmed.
 // Never throws.
 export async function sendCancelledNotification(slot: Slot): Promise<void> {
@@ -125,7 +125,7 @@ export async function sendCancelledNotification(slot: Slot): Promise<void> {
   }
 }
 
-// Fired when the owner confirms a booking. Lets the customer know they're set.
+// Fired when the admin confirms a booking. Lets the customer know they're set.
 // Never throws.
 export async function sendConfirmedNotification(slot: Slot): Promise<void> {
   if (!slot.booking?.email) return;

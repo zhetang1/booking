@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { removeSlot, confirmSlot, cancelBooking } from "@/lib/db";
-import { isOwner } from "@/lib/auth";
+import { isAdmin } from "@/lib/auth";
 import { sendConfirmedNotification, sendCancelledNotification } from "@/lib/notify";
 
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!(await isOwner())) {
+  if (!(await isAdmin())) {
     return NextResponse.json({ ok: false, error: "Not authorized." }, { status: 401 });
   }
   const { id } = await params;
@@ -15,12 +15,12 @@ export async function DELETE(
   return NextResponse.json({ ok: true });
 }
 
-// Owner confirms or cancels/declines a booking.
+// Admin confirms or cancels/declines a booking.
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!(await isOwner())) {
+  if (!(await isAdmin())) {
     return NextResponse.json({ ok: false, error: "Not authorized." }, { status: 401 });
   }
   const { id } = await params;

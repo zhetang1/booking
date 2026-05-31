@@ -1,17 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { addSlot, getSlots, getAvailableSlots } from "@/lib/db";
-import { isOwner } from "@/lib/auth";
+import { addSlot, getSlots, getPublicSlots } from "@/lib/db";
+import { isAdmin } from "@/lib/auth";
 
 export async function GET() {
-  // Owners see every slot (incl. who booked it); customers see open slots only.
-  if (await isOwner()) {
-    return NextResponse.json({ slots: await getSlots(), owner: true });
+  // Admins see every slot with full booking details; the public sees all future
+  // slots (open + pending/confirmed) but with customer PII redacted.
+  if (await isAdmin()) {
+    return NextResponse.json({ slots: await getSlots(), admin: true });
   }
-  return NextResponse.json({ slots: await getAvailableSlots(), owner: false });
+  return NextResponse.json({ slots: await getPublicSlots(), admin: false });
 }
 
 export async function POST(req: NextRequest) {
-  if (!(await isOwner())) {
+  if (!(await isAdmin())) {
     return NextResponse.json({ ok: false, error: "Not authorized." }, { status: 401 });
   }
   const body = await req.json().catch(() => null);
