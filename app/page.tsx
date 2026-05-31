@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Hero from "./Hero";
+import Gallery from "./Gallery";
 import BookingClient from "./BookingClient";
 
 export default function Home() {
@@ -12,14 +13,17 @@ export default function Home() {
         <h2 className="text-2xl font-bold text-slate-900">Meet Natalie</h2>
         <p className="mt-3 leading-relaxed text-slate-600">
           Natalie is a Red Cross certified lifeguard who has spent the last few
-          summers teaching swimmers of all ages at the Glen Rock Pool. A recent
+          summers teaching swimmers of all ages. A recent
           high school graduate heading to USC, she brings{" "}
-          <strong>4 years of experience</strong> as a swim instructor to private
+          <strong>4 years of experience </strong> as a swim instructor to private
           lessons in her family&apos;s big backyard pool. Whether your swimmer is
           just getting comfortable in the water or working on their strokes,
           Natalie will help them learn to swim with confidence and safety.
         </p>
       </section>
+
+      {/* Backyard pool photos (renders when the files exist in /public) */}
+      <Gallery />
 
       {/* Booking */}
       <section id="book" className="bg-slate-50 py-12">

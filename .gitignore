@@ -44,3 +44,6 @@ next-env.d.ts
 
 # local data store
 /data/db.json
+
+# IDE
+.idea/
