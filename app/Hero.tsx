@@ -49,6 +49,12 @@ export default function Hero() {
             >
               Book a lesson →
             </a>
+            <a
+              href="tel:+12019573751"
+              className="rounded-full bg-white/15 px-6 py-3 font-bold text-white ring-1 ring-white/30 transition hover:bg-white/25"
+            >
+              📞 Text (201) 957-3751
+            </a>
             <span className="rounded-full bg-white/15 px-4 py-2 text-sm font-semibold">
               📍 35 Rutland Rd. Glen Rock, NJ
             </span>
