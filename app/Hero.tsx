@@ -66,10 +66,11 @@ export default function Hero() {
   );
 }
 
-// Hand-drawn, flyer-style doodle: two ginger-haired kids in a soft blue water
-// blob, with white ripple linework and scattered splash droplets.
+// Hand-drawn, flyer-style doodle: two kids in a soft blue water blob, with white
+// ripple linework and scattered splash droplets. One has ginger hair, one black.
 const SKIN = "#ffd3a1";
 const HAIR = "#f0913c";
+const HAIR_DARK = "#2b2832";
 const SUIT = "#ee5391";
 const INK = "#33271b";
 const WATER = "#5478c4";
@@ -154,9 +155,9 @@ function FrontSwimmer() {
   return (
     <g transform="translate(98 102)">
       {/* long hair behind, flowing into the water */}
-      <ellipse cx="0" cy="-19" rx="18" ry="20" fill={HAIR} />
-      <path d="M-15 -8 q-7 28 -3 52" fill="none" stroke={HAIR} strokeWidth="8" strokeLinecap="round" />
-      <path d="M15 -8 q7 28 3 52" fill="none" stroke={HAIR} strokeWidth="8" strokeLinecap="round" />
+      <ellipse cx="0" cy="-20" rx="15" ry="16" fill={HAIR} />
+      <path d="M-13 -10 q-5 24 -3 48" fill="none" stroke={HAIR} strokeWidth="4.5" strokeLinecap="round" />
+      <path d="M13 -10 q5 24 3 48" fill="none" stroke={HAIR} strokeWidth="4.5" strokeLinecap="round" />
 
       {/* torso + pink swimsuit */}
       <path d="M-12 -6 Q0 -11 12 -6 L11 34 Q0 39 -11 34 Z" fill={SUIT} stroke={INK} strokeWidth="1" />
@@ -185,8 +186,8 @@ function BackSwimmer() {
   return (
     <g transform="translate(152 92) scale(0.9)">
       {/* hair + bun */}
-      <ellipse cx="0" cy="-17" rx="15" ry="16" fill={HAIR} />
-      <circle cx="0" cy="-33" r="7" fill={HAIR} />
+      <ellipse cx="0" cy="-17" rx="15" ry="16" fill={HAIR_DARK} />
+      <circle cx="0" cy="-33" r="7" fill={HAIR_DARK} />
 
       {/* torso + pink swimsuit */}
       <path d="M-11 -5 Q0 -10 11 -5 L10 32 Q0 37 -10 32 Z" fill={SUIT} stroke={INK} strokeWidth="1" />
@@ -197,7 +198,7 @@ function BackSwimmer() {
 
       {/* head */}
       <circle cx="0" cy="-17" r="12.5" fill={SKIN} />
-      <path d="M-12 -19 Q-12 -31 0 -31 Q12 -31 12 -19 Q6 -26 0 -25 Q-6 -26 -12 -19 Z" fill={HAIR} />
+      <path d="M-12 -19 Q-12 -31 0 -31 Q12 -31 12 -19 Q6 -26 0 -25 Q-6 -26 -12 -19 Z" fill={HAIR_DARK} />
 
       {/* face */}
       <circle cx="-4.8" cy="-17" r="1.7" fill={INK} />
