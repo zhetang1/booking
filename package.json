@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "gen:hero": "node --env-file-if-exists=.env.local --env-file-if-exists=.env.vercel scripts/generate-hero-image.mjs"
   },
   "dependencies": {
+    "ai": "^6.0.193",
     "next": "16.2.6",
     "postgres": "^3.4.9",
     "react": "19.2.4",
