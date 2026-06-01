@@ -4,7 +4,7 @@ A small Next.js web app for booking Natalie's private swimming lessons in her
 backyard pool. Customers pick an open time and book with their name + phone;
 Natalie logs in to publish available times and see her bookings.
 
-- **$60 per 30-minute lesson** · paid in cash or Venmo at the lesson
+- Paid in cash or Venmo at the lesson
 - Glen Rock, NJ · big private backyard pool (50 ft × 25 ft)
 
 ## Run locally
