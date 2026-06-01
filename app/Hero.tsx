@@ -42,7 +42,14 @@ export default function Hero() {
             ))}
           </ul>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+        </div>
+
+        {/* Illustration + call-to-action */}
+        <div className="relative">
+          <div className="mx-auto flex max-w-sm items-center justify-center">
+            <Swimmers />
+          </div>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <a
               href="#book"
               className="rounded-full bg-[#f2e85c] px-6 py-3 font-bold text-[#22356b] shadow-md transition hover:brightness-105"
@@ -55,23 +62,6 @@ export default function Hero() {
             >
               📞 Text (201) 957-3751
             </a>
-            <span className="rounded-full bg-white/15 px-4 py-2 text-sm font-semibold">
-              📍 35 Rutland Rd. Glen Rock, NJ
-            </span>
-          </div>
-        </div>
-
-        {/* Illustration + price badge */}
-        <div className="relative">
-          <div className="mx-auto flex max-w-sm items-center justify-center">
-            <Swimmers />
-          </div>
-          <div className="mx-auto mt-5 w-fit rounded-2xl bg-white px-6 py-4 text-center text-[#22356b] shadow-lg">
-            <div className="text-3xl font-black">$60</div>
-            <div className="text-sm font-semibold">per half-hour lesson</div>
-            <div className="mt-1 text-xs font-medium text-slate-500">
-              Cash or Venmo
-            </div>
           </div>
         </div>
       </div>

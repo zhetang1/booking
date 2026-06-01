@@ -30,8 +30,7 @@ export default function Home() {
         <div className="mx-auto max-w-3xl px-6">
           <h2 className="text-2xl font-bold text-slate-900">Book a lesson</h2>
           <p className="mt-2 text-slate-600">
-            Pick one or more open times below. Each lesson is 30 minutes for{" "}
-            <strong>$60</strong>, paid in cash or Venmo at the lesson.
+            Pick one or more open times below. Paid in cash or Venmo at the lesson.
           </p>
           <div className="mt-6">
             <BookingClient />
