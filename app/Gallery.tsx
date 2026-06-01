@@ -36,7 +36,7 @@ export default function Gallery() {
       </p>
       <div
         className={`mt-6 grid gap-4 ${
-          photos.length > 1 ? "sm:grid-cols-2" : "mx-auto max-w-md"
+          photos.length > 1 ? "sm:grid-cols-2" : "mx-auto max-w-2xl"
         }`}
       >
         {photos.map((p) => (
@@ -53,7 +53,7 @@ export default function Gallery() {
               sizes={
                 photos.length > 1
                   ? "(min-width: 640px) 50vw, 100vw"
-                  : "(min-width: 640px) 28rem, 100vw"
+                  : "(min-width: 640px) 42rem, 100vw"
               }
               className="object-cover"
             />
