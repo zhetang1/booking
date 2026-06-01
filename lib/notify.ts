@@ -115,7 +115,7 @@ export async function sendCancelledNotification(slot: Slot): Promise<void> {
             ? `Unfortunately Natalie had to cancel your confirmed lesson on <strong>${when}</strong>.`
             : `Unfortunately Natalie wasn't able to confirm your requested lesson on <strong>${when}</strong>.`
         }</p>
-        <p style="margin:16px 0 0;color:#475569">That time is open again — feel free to book another slot, and sorry for the inconvenience!</p>
+        <p style="margin:16px 0 0;color:#475569">Feel free to book another slot, and sorry for the inconvenience!</p>
       `)
     );
   } catch (err) {
