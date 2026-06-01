@@ -34,17 +34,27 @@ export default function Gallery() {
       <p className="mt-2 text-slate-600">
         Lessons happen right here in our big private backyard pool in Glen Rock.
       </p>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+      <div
+        className={`mt-6 grid gap-4 ${
+          photos.length > 1 ? "sm:grid-cols-2" : "mx-auto max-w-md"
+        }`}
+      >
         {photos.map((p) => (
           <div
             key={p.base}
-            className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200"
+            className={`relative overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200 ${
+              photos.length > 1 ? "aspect-[4/3]" : "aspect-[3/4]"
+            }`}
           >
             <Image
               src={p.src}
               alt={p.alt}
               fill
-              sizes="(min-width: 640px) 50vw, 100vw"
+              sizes={
+                photos.length > 1
+                  ? "(min-width: 640px) 50vw, 100vw"
+                  : "(min-width: 640px) 28rem, 100vw"
+              }
               className="object-cover"
             />
           </div>
