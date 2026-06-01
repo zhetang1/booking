@@ -182,7 +182,7 @@ export default function BookingClient() {
       {selectedSlots.length > 0 && (
         <form
           onSubmit={submit}
-          className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+          className="max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
         >
           <p className="mb-3 font-semibold text-slate-800">
             Booking{" "}

@@ -23,7 +23,7 @@ export default function Home() {
 
       {/* Booking */}
       <section id="book" className="bg-slate-50 py-12">
-        <div className="mx-auto max-w-3xl px-6">
+        <div className="mx-auto max-w-5xl px-6">
           <h2 className="text-2xl font-bold text-slate-900">Book a lesson</h2>
           <p className="mt-2 text-slate-600">
             Pick one or more open times below. Paid in cash or Venmo at the lesson.
