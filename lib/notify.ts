@@ -138,7 +138,7 @@ export async function sendConfirmedNotification(slot: Slot): Promise<void> {
         <h2 style="margin:0 0 12px">You're confirmed! 🎉</h2>
         <p style="margin:0 0 8px">Hi ${name}, Natalie confirmed your swimming lesson:</p>
         <p style="margin:0 0 8px;font-size:18px"><strong>${when}</strong> · 30 minutes</p>
-        <p style="margin:16px 0 0;color:#475569">Please bring in cash or be ready to pay by Venmo at the lesson. See you at the pool!</p>
+        <p style="margin:16px 0 0;color:#475569">Please bring cash or be ready to pay by Venmo at the lesson. See you at the pool!</p>
       `)
     );
   } catch (err) {
