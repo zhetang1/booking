@@ -131,8 +131,7 @@ export default function BookingClient() {
         <p className="mt-4 text-sm text-amber-800">
           Your {multiple ? "spots are" : "spot is"} held while{" "}
           <strong>Natalie confirms</strong>. She&apos;ll reach out, and you&apos;ll get a
-          confirmation if you left an email. Payment is{" "}
-          <strong>$60 per lesson in cash or Venmo</strong> at the lesson.
+          confirmation if you left an email. Payment is due at the lesson.
         </p>
         <button
           onClick={() => setConfirmed(null)}
@@ -264,7 +263,7 @@ export default function BookingClient() {
             </button>
           </div>
           <p className="mt-3 text-xs text-slate-500">
-            Payment is $60 per lesson, due at the lesson — cash or Venmo.
+            Payment is due at the lesson — cash or Venmo.
           </p>
         </form>
       )}

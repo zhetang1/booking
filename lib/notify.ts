@@ -64,7 +64,7 @@ export async function sendBookingRequestNotifications(slot: Slot): Promise<void>
           <p style="margin:0 0 8px"><strong>Customer:</strong> ${name}</p>
           <p style="margin:0 0 8px"><strong>Phone:</strong> <a href="tel:${phone}">${phone}</a></p>
           ${email ? `<p style="margin:0 0 8px"><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>` : ""}
-          <p style="margin:16px 0 0;color:#475569">Log in to your dashboard to <strong>confirm</strong> this booking. Remember to collect <strong>$60</strong> cash or Venmo at the lesson.</p>
+          <p style="margin:16px 0 0;color:#475569">Log in to your dashboard to <strong>confirm</strong> this booking. Remember to collect cash or Venmo at the lesson.</p>
         `)
       )
     );
@@ -79,8 +79,7 @@ export async function sendBookingRequestNotifications(slot: Slot): Promise<void>
           <h2 style="margin:0 0 12px">Request received! 🙌</h2>
           <p style="margin:0 0 8px">Hi ${name}, we got your request for a swimming lesson with Natalie:</p>
           <p style="margin:0 0 8px;font-size:18px"><strong>${when}</strong> · 30 minutes</p>
-          <p style="margin:16px 0 0;color:#475569">Your spot is held while Natalie confirms — you'll get one more email once it's confirmed. Payment is <strong>$60</strong>, cash or Venmo at the lesson.</p>
-          <p style="margin:12px 0 0;color:#94a3b8;font-size:13px">📍 Glen Rock, NJ</p>
+          <p style="margin:16px 0 0;color:#475569">Your spot is held while Natalie confirms — you'll get one more email once it's confirmed. Payment in cash or Venmo at the lesson.</p>
         `)
       )
     );
@@ -117,7 +116,6 @@ export async function sendCancelledNotification(slot: Slot): Promise<void> {
             : `Unfortunately Natalie wasn't able to confirm your requested lesson on <strong>${when}</strong>.`
         }</p>
         <p style="margin:16px 0 0;color:#475569">That time is open again — feel free to book another slot, and sorry for the inconvenience!</p>
-        <p style="margin:12px 0 0;color:#94a3b8;font-size:13px">📍 Glen Rock, NJ</p>
       `)
     );
   } catch (err) {
@@ -140,8 +138,7 @@ export async function sendConfirmedNotification(slot: Slot): Promise<void> {
         <h2 style="margin:0 0 12px">You're confirmed! 🎉</h2>
         <p style="margin:0 0 8px">Hi ${name}, Natalie confirmed your swimming lesson:</p>
         <p style="margin:0 0 8px;font-size:18px"><strong>${when}</strong> · 30 minutes</p>
-        <p style="margin:16px 0 0;color:#475569">Please bring <strong>$60</strong> in cash or be ready to pay by Venmo at the lesson. See you at the pool!</p>
-        <p style="margin:12px 0 0;color:#94a3b8;font-size:13px">📍 Glen Rock, NJ</p>
+        <p style="margin:16px 0 0;color:#475569">Please bring in cash or be ready to pay by Venmo at the lesson. See you at the pool!</p>
       `)
     );
   } catch (err) {
