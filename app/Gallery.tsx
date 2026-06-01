@@ -7,7 +7,6 @@ import path from "node:path";
 // Until then, this section renders nothing — no broken images.
 const PHOTOS = [
   { base: "pool1", alt: "Natalie's big private backyard pool, surrounded by trees" },
-  { base: "pool-jump", alt: "Kids having fun jumping into the backyard pool on a sunny day" },
 ];
 
 const EXTENSIONS = ["jpg", "jpeg", "png", "webp"];
