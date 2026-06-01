@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Hero from "./Hero";
-import Gallery from "./Gallery";
 import BookingClient from "./BookingClient";
 
 export default function Home() {
@@ -21,9 +20,6 @@ export default function Home() {
           Natalie will help them learn to swim with confidence and safety.
         </p>
       </section>
-
-      {/* Backyard pool photos (renders when the files exist in /public) */}
-      <Gallery />
 
       {/* Booking */}
       <section id="book" className="bg-slate-50 py-12">
