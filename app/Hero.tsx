@@ -41,8 +41,14 @@ export default function Hero() {
               </li>
             ))}
           </ul>
+        </div>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+        {/* Illustration + call-to-action */}
+        <div className="relative">
+          <div className="mx-auto flex max-w-sm items-center justify-center">
+            <Swimmers />
+          </div>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <a
               href="#book"
               className="rounded-full bg-[#f2e85c] px-6 py-3 font-bold text-[#22356b] shadow-md transition hover:brightness-105"
@@ -55,13 +61,6 @@ export default function Hero() {
             >
               📞 Text (201) 957-3751
             </a>
-          </div>
-        </div>
-
-        {/* Illustration */}
-        <div className="relative">
-          <div className="mx-auto flex max-w-sm items-center justify-center">
-            <Swimmers />
           </div>
         </div>
       </div>
