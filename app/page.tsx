@@ -1,6 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 import Hero from "./Hero";
 import BookingClient from "./BookingClient";
+
+const PHOTOS = [
+  { src: "/IMG_1.jpg", alt: "Backyard pool with flowers in bloom" },
+  { src: "/IMG_2.jpg", alt: "Poolside patio with umbrella and hydrangeas" },
+  { src: "/IMG_3.jpg", alt: "Garden irises beside the pool" },
+];
 
 export default function Home() {
   return (
@@ -19,6 +26,26 @@ export default function Home() {
           just getting comfortable in the water or working on their strokes,
           Natalie will help them learn to swim with confidence and safety.
         </p>
+      </section>
+
+      {/* Pool photos */}
+      <section className="mx-auto max-w-5xl px-6 pb-12">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {PHOTOS.map((p) => (
+            <div
+              key={p.src}
+              className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200"
+            >
+              <Image
+                src={p.src}
+                alt={p.alt}
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Booking */}

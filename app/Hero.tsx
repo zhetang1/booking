@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 // Marketing hero — recreates the flyer's look (deep blue, yellow display type,
 // playful swimmer illustration) with the updated details the admin provided.
 export default function Hero() {
@@ -60,20 +58,10 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Illustration + real pool photo */}
+        {/* Illustration */}
         <div className="relative">
           <div className="mx-auto flex max-w-sm items-center justify-center">
             <Swimmers />
-          </div>
-          <div className="mt-5 flex justify-center">
-            <Image
-              src="/pool1.jpg"
-              alt="Natalie's big private backyard pool, surrounded by trees"
-              width={320}
-              height={427}
-              className="w-72 rounded-2xl shadow-lg ring-2 ring-white/40"
-              priority
-            />
           </div>
         </div>
       </div>
