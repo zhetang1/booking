@@ -31,7 +31,7 @@ export default function Hero() {
             {[
               "Red Cross Lifeguard & CPR Certified",
               "4 years of experience as a swim instructor",
-              "Recent The Lawrenceville High School grad — heading to USC 🎓",
+              "The Lawrenceville High School grad — heading to USC 🎓",
               "BIG private pool (50 ft × 25 ft)",
               "Flexible half-hour sessions",
             ].map((item) => (
